@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azureappserviceforcicdtest
+  labels:
+    app: azureappserviceforcicdtest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: azureappserviceforcicdtest
+  template:
+    metadata:
+      labels:
+        app: azureappserviceforcicdtest
+    spec:
+      containers:
+        - name: azureappserviceforcicdtest
+          image: springbootacr123.azurecr.io/azureappserviceforcicdtest:#{Build.BuildId}#        
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: azure-vote-front
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: azureappserviceforcicdtest

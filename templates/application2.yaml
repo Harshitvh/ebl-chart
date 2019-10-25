@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azureappserviceforcicdtest2
+  labels:
+    app: azureappserviceforcicdtest2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: azureappserviceforcicdtest2
+  template:
+    metadata:
+      labels:
+        app: azureappserviceforcicdtest2
+    spec:
+      containers:
+        - name: azureappserviceforcicdtest2
+          image: springbootacr123.azurecr.io/azureappserviceforcicdtest2:#{Build.BuildId}#        
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: secondloadbalancer
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: azureappserviceforcicdtest2

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: azureappserviceforcicdtest
-          image: springbootacr123.azurecr.io/azureappserviceforcicdtest:#{Build.BuildId}#        
+          image: novdemo.azurecr.io/azureappserviceforcicdtest:#{Build.BuildId}#        
           ports:
             - containerPort: 8080
 ---
